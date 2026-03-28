@@ -53,3 +53,11 @@ this gives the gradient of a loss, which one would use in gradient descent
 w = w - 0.1 * grad_loss(w, x, y)
 ```
 
+In standard NumPy, you can modify an array directly—for example, updating the first element with `b[0] = 1`. In JAX, this kind of in-place update isn’t allowed. JAX arrays (DeviceArrays) are immutable, meaning their contents cannot be changed after creation.
+
+This design ties back to JAX’s requirement for pure functions: computations should not have side effects or modify existing data. Allowing in-place changes would make it much harder for JAX to analyze and optimize code, especially when using just-in-time compilation.
+
+Instead, JAX provides a functional alternative. You can write `b.at[0].set(1)`, whichThe key distinction—and in many ways the foundation of everything else—is that JAX is built around a functional programming style. This design makes it much easier for JAX to apply powerful transformations like compilation and automatic differentiation. The core idea to understand is simple: avoid writing code with side effects. doesn’t modify b directly. Rather, it returns a new array that is identical to b, except that the first element is updated to 1.
+
+The key distinction—and in many ways the foundation of everything else—is that JAX is built around a functional programming style. This design makes it much easier for JAX to apply powerful transformations like compilation and automatic differentiation. The core idea to understand is simple: avoid writing code with side effects.
+In practice, this means structuring your main JAX computations as functions that depend only on their inputs and produce outputs, without modifying anything external.
