@@ -1,4 +1,5 @@
 # toy training models using [JAX](https://docs.jax.dev/en/latest/)
+collection of toy models.
 
 JAX is a high-performance numerical computing library that combines NumPy-like APIs with automatic differentiation, vectorisation and Just in Time Compilation (JIT).
 
